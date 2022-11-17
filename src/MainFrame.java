@@ -2,20 +2,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.EventListener;
 
 public class MainFrame extends JFrame implements ActionListener {
 
-    public MainFrame(){
+    public MainFrame() {
         //Initial settings
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setSize(500,500);
+        setSize(800,800);
         setTitle("GameOfLife");
         setResizable(false);
 
         Container menu_container=intitMenu();
         Container game_container=initPlayWindow();
-        add(menu_container);
+        //add(game_container);
 
         setVisible(true);
     }
@@ -76,9 +75,15 @@ public class MainFrame extends JFrame implements ActionListener {
         return menu_container;
     }
 
-    private Container initPlayWindow(){
+    private Container initPlayWindow() {
         Container game_container=new Container();
+        game_container.setLayout(new BorderLayout());
+        JPanel panel1=new JPanel();
+        panel1.setLayout(new FlowLayout());
+        game_container.add(panel1);
 
+        DisplayGraphics g=new DisplayGraphics(20);
+        add(g);
 
         return game_container;
     }
