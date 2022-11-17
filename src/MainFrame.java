@@ -1,41 +1,85 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.EventListener;
 
-public class MainFrame {
+public class MainFrame extends JFrame implements ActionListener {
 
     public MainFrame(){
-        JFrame f=new JFrame();
-        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        f.setSize(500,500);
-        f.setTitle("GameOfLife");
-        f.setResizable(false);
+        //Initial settings
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setSize(500,500);
+        setTitle("GameOfLife");
+        setResizable(false);
 
-        JPanel main_panel=new JPanel();
-        main_panel.setLayout(new BoxLayout(main_panel, BoxLayout.Y_AXIS));
-        f.add(main_panel);
+        Container menu_container=intitMenu();
+        Container game_container=initPlayWindow();
+        add(menu_container);
 
+        setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        setTitle("asd");
+    }
+    
+    private void setButtonStyle(JButton button, Dimension dimension, Color color, Font font){
+        button.setPreferredSize(dimension);
+        button.setBackground(color);
+        button.setFocusPainted(false);
+        button.setFont(font);
+    }
+
+    private Container intitMenu(){
+        Container menu_container=new Container();
+        menu_container.setLayout(new BoxLayout(menu_container, BoxLayout.Y_AXIS));
+
+        //Title panel
         JPanel panel1=new JPanel();
         panel1.setLayout(new FlowLayout());
         panel1.setBackground(Color.gray);
-        panel1.add(new JLabel("Conway's Game Of Life"));
-        main_panel.add(panel1);
+        JLabel label=new JLabel("Conway's Game of Life");
+        label.setFont(new Font("Impact", Font.PLAIN, 50));
+        panel1.add(label);
+        menu_container.add(panel1);
 
+        //Buttons panel
         JPanel panel2=new JPanel();
         panel2.setBackground(Color.gray);
         panel2.setLayout(new FlowLayout());
-        main_panel.add(panel2);
+        menu_container.add(panel2);
 
-        JButton new_game=new JButton("New Game");
-        JButton load_game=new JButton("Load Game");
-        JButton exit=new JButton("Exit");
-        new_game.setPreferredSize(new Dimension(100, 100));
-        load_game.setPreferredSize(new Dimension(100, 100));
-        exit.setPreferredSize(new Dimension(100, 100));
+        //Buttons
+        JButton new_game = new JButton("New Game");
+        JButton load_game = new JButton("Load Game");
+        JButton exit = new JButton("Exit");
+
+        //Button events
+        new_game.addActionListener(ae -> setTitle(ae.getActionCommand()));
+        load_game.addActionListener(ae -> setTitle(ae.getActionCommand()));
+        exit.addActionListener(e -> System.exit(0));
+
+        //Button formatting
+        Font basic_font=new Font("Impact", Font.PLAIN, 15);
+        Dimension button_dimension=new Dimension(150, 100);
+        setButtonStyle(new_game, button_dimension, Color.WHITE, basic_font);
+        setButtonStyle(load_game, button_dimension, Color.WHITE, basic_font);
+        setButtonStyle(exit, button_dimension, Color.WHITE, basic_font);
+
+        //Adding buttons to panel
         panel2.add(new_game);
         panel2.add(load_game);
         panel2.add(exit);
 
+        return menu_container;
+    }
 
-        f.setVisible(true);
+    private Container initPlayWindow(){
+        Container game_container=new Container();
+
+
+        return game_container;
     }
 }
