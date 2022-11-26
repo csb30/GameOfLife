@@ -13,15 +13,14 @@ public class MainFrame extends JFrame implements ActionListener {
         setResizable(false);
 
         Container menu_container=intitMenu();
-        Container game_container=initPlayWindow();
-        //add(game_container);
+        add(menu_container);
 
         setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        setTitle("asd");
+
     }
     
     private void setButtonStyle(JButton button, Dimension dimension, Color color, Font font){
@@ -56,7 +55,7 @@ public class MainFrame extends JFrame implements ActionListener {
         JButton exit = new JButton("Exit");
 
         //Button events
-        new_game.addActionListener(ae -> setTitle(ae.getActionCommand()));
+        new_game.addActionListener(ae -> new GameFrame());
         load_game.addActionListener(ae -> setTitle(ae.getActionCommand()));
         exit.addActionListener(e -> System.exit(0));
 
@@ -73,18 +72,5 @@ public class MainFrame extends JFrame implements ActionListener {
         panel2.add(exit);
 
         return menu_container;
-    }
-
-    private Container initPlayWindow() {
-        Container game_container=new Container();
-        game_container.setLayout(new BorderLayout());
-        JPanel panel1=new JPanel();
-        panel1.setLayout(new FlowLayout());
-        game_container.add(panel1);
-
-        DisplayGraphics g=new DisplayGraphics(20);
-        add(g);
-
-        return game_container;
     }
 }
