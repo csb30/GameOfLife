@@ -51,6 +51,46 @@ public class GamePanel extends JPanel implements ComponentListener, MouseListene
         repaint();
     }
 
+    public int getNeighbourCount(int x, int y){
+        int count=0;
+
+        //row above
+        if(x-1>=0 && y-1>=0 && map[x-1][y-1]) count++;
+        if(y-1>=0 && map[x][y-1]) count++;
+        if(x+1<gridsize && y-1>=0 && map[x+1][y-1]) count++;
+
+        //two sides
+        if(x-1>=0 && map[x-1][y]) count++;
+        if(x+1<gridsize && map[x+1][y]) count++;
+
+        //row below
+        if(x-1>=0 && y+1<gridsize && map[x-1][y+1]) count++;
+        if(y+1<gridsize && map[x][y+1]) count++;
+        if(x+1<gridsize && y+1<gridsize && map[x+1][y+1]) count++;
+
+        return count;
+    }
+
+    public boolean[][] getMap() {
+        return map;
+    }
+
+    public void step(boolean[][] map){
+        this.map=copyMap(map);
+        repaint();
+    }
+
+    public boolean[][] copyMap(boolean[][] map){
+        boolean[][] ret=new boolean[map.length][map[0].length];
+        for(int y=0; y<map[0].length; y++) {
+            for (int x = 0; x < map.length; x++) {
+                ret[x][y]=map[x][y];
+            }
+        }
+
+        return ret;
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
         int x=e.getPoint().x;

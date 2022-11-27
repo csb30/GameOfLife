@@ -57,7 +57,7 @@ public class MainFrame extends JFrame implements ActionListener {
         //Button events
         new_game.addActionListener(ae -> new GameFrame());
         load_game.addActionListener(ae -> setTitle(ae.getActionCommand()));
-        exit.addActionListener(e -> System.exit(0));
+        exit.addActionListener(ae -> System.exit(0));
 
         //Button formatting
         Font basic_font=new Font("Impact", Font.PLAIN, 15);
