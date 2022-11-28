@@ -10,6 +10,7 @@ public class GamePanel extends JPanel implements ComponentListener, MouseListene
     int size;
     int windowsize=800;
     int gameareasize;
+    boolean[][] drag_array;
 
     public GamePanel(int gridsize){
         addComponentListener(this);
@@ -21,6 +22,19 @@ public class GamePanel extends JPanel implements ComponentListener, MouseListene
 
         size=(800-padding*2-gridsize*gap)/ gridsize;
         gameareasize=gridsize*(size+gap);
+    }
+
+    public GamePanel(boolean[][] map){
+        addComponentListener(this);
+        addMouseListener(this);
+        addMouseMotionListener(this);
+
+        this.gridsize=map.length;
+
+        size=(800-padding*2-gridsize*gap)/ gridsize;
+        gameareasize=gridsize*(size+gap);
+
+        step(map);
     }
 
     public void paint(Graphics g){
@@ -91,22 +105,33 @@ public class GamePanel extends JPanel implements ComponentListener, MouseListene
         return ret;
     }
 
+    public int pos_to_coord(int i){
+        return (i-padding)/(size+gap);
+    }
+
+    public void clear(){
+        map=new boolean[gridsize][gridsize];
+        repaint();
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
         int x=e.getPoint().x;
         int y=e.getPoint().y;
         if(x>padding && x<padding+gameareasize
         && y>padding && y<padding+gameareasize){
-            flipCell((x-padding)/(size+gap),(y-padding)/(size+gap));
+            flipCell(pos_to_coord(x),pos_to_coord(y));
         }
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
+        drag_array=new boolean[gridsize][gridsize];
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        drag_array=null;
     }
 
     @Override
@@ -119,7 +144,14 @@ public class GamePanel extends JPanel implements ComponentListener, MouseListene
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        mouseClicked(e);
+        int x=e.getPoint().x;
+        int y=e.getPoint().y;
+        if(x>padding && x<padding+gameareasize
+        && y>padding && y<padding+gameareasize
+        && !drag_array[pos_to_coord(x)][pos_to_coord(y)]){
+            drag_array[pos_to_coord(x)][pos_to_coord(y)]=true;
+            mouseClicked(e);
+        }
     }
 
     @Override
